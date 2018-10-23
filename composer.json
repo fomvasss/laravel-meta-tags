@@ -1,0 +1,36 @@
+{
+    "name": "fomvasss/laravel-meta-tags",
+    "description": "A package to manage SEO Meta Tags",
+    "type": "composer-package",
+    "keywords": ["meta tags", "meta", "tags", "seo", "laravel"],
+    "authors": [
+        {
+            "name": "Vasyl Fomin",
+            "email": "fomvasss@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php" : ">=7.0.0",
+        "illuminate/support": "5.6.*|5.7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fomvasss\\LaravelMetaTags\\": "src"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Fomvasss\\LaravelMetaTags\\ServiceProvider"
+            ],
+            "aliases": {
+                "MetaTag": "Fomvasss\\LaravelMetaTags\\Facade"
+            }
+        }
+    }
+}
