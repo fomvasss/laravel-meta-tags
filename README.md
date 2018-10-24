@@ -1,5 +1,11 @@
 # Laravel Meta Tags
 
+[![License](https://img.shields.io/packagist/l/fomvasss/laravel-meta-tags.svg?style=for-the-badge)](https://packagist.org/packages/fomvasss/laravel-meta-tags)
+[![Build Status](https://img.shields.io/github/stars/fomvasss/laravel-meta-tags.svg?style=for-the-badge)](https://github.com/fomvasss/laravel-meta-tags)
+[![Latest Stable Version](https://img.shields.io/packagist/v/fomvasss/laravel-meta-tags.svg?style=for-the-badge)](https://packagist.org/packages/fomvasss/laravel-meta-tags)
+[![Total Downloads](https://img.shields.io/packagist/dt/fomvasss/laravel-meta-tags.svg?style=for-the-badge)](https://packagist.org/packages/fomvasss/laravel-meta-tags)
+[![Quality Score](https://img.shields.io/scrutinizer/g/fomvasss/laravel-meta-tags.svg?style=for-the-badge)](https://scrutinizer-ci.com/g/fomvasss/laravel-meta-tags)
+
 With this package you can manage Meta Tags from Laravel controllers.
 
 ----------
@@ -17,12 +23,18 @@ composer require fomvasss/laravel-meta-tags
 Run this on the command line:
 
 ```
-$ php artisan vendor:publish --provider="Fomvasss\LaravelMetaTags\ServiceProvider"
+php artisan vendor:publish --provider="Fomvasss\LaravelMetaTags\ServiceProvider"
 ```
 - A configuration file will be publish to `config/meta-tags.php`.
 - A migration file will be publish to `database/migrations/DATE_NOV_create_meta_tags_table.php`.
 - A blade template file will be publish to `resources/views/vondor/meta-tags/tags.blade.php`.
 
+After publish, edit `config/meta-tags.php` - set available tags - uncomment needed
+
+And edit (if need) and run migrate:
+```
+php artisan migrate
+```
 
 ## Examples usage
 
@@ -87,7 +99,7 @@ class HomeController extends Controller
         $article = \App\Model\Article::findOrFail($id);
 
         MetaTag::setEntity($article)
-            ->setTags(['title' => $article->title]); // set custom field
+            ->setDefault(['title' => $article->title]); // set custom field
         
         return view('stow', compact('article'));
     }
@@ -97,12 +109,17 @@ class HomeController extends Controller
         $articles = \App\Model\Article::bySearch($request->q)
             ->paginate();
 
-        MetaTag::setPath(); // default - request()->path()
+        MetaTag::setPath()  // if argument `setPath()` is empty - path = request()->path()
+            ->setDefault(['title' => 'Search page']);
         
         return view('index', compact('articles'));
     }
 }
 ```
+
+**If you store meta tags for path - set field `path` without domain!**
+
+Also you can use helper `meta_tag_prepare_path()` for clear url path before seved to DB.
 
 #### resources/views/layouts/app.blade.php
 
@@ -113,12 +130,11 @@ class HomeController extends Controller
         <meta charset="utf-8" />
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-        <title>{{ MetaTag::get('title') }}</title>
-
-        {!! MetaTag::tag('description') !!}
-        {!! MetaTag::tag('keywords') !!}
+        <title>{!! MetaTag::get('title') !!}</title>
+        <meta name="description" content="{!! MetaTag::tag('description') !!}">
+        <meta name="keywords" content="{!! MetaTag::tag('keywords') !!}">
+        
     </head>
-
     <body>
         @yield('content')
     </body>
@@ -135,8 +151,8 @@ class HomeController extends Controller
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
         {!! MetaTag::render() !!}
+        
     </head>
-
     <body>
         @yield('content')
     </body>
@@ -151,12 +167,14 @@ class HomeController extends Controller
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
-
-        {!! MetaTag::setEntity($article) !!}
-        {!! MetaTag::setTags(['description' => 'My custom meta tag']) !!}
+        
+        @php
+            MetaTag::setEntity($article)
+            MetaTag::setDefault(['description' => 'My custom meta tag'])
+        @endphp
         {!! MetaTag::render() !!}
+        
     </head>
-
     <body>
         @yield('content')
     </body>

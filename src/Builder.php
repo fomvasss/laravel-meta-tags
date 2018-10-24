@@ -13,27 +13,57 @@ use Illuminate\Database\Eloquent\Model;
 
 class Builder
 {
-    /** @var null  */
+    /**
+     * @var null
+     */
     protected $entityModel = null;
 
-    /** @var string  */
+    /**
+     * Sett path.
+     *
+     * @var string
+     */
     protected $path = '';
 
-    /** @var array  */
+    /**
+     * Force set tags.
+     *
+     * @var array
+     */
     protected $tags = [];
 
-    /** @var array  */
+    /**
+     * Default tags.
+     *
+     * @var array
+     */
+    protected $default = [];
+
+    /**
+     * Result.
+     *
+     * @var array
+     */
     protected $result = [];
 
-    /** @var null  */
+    /**
+     * @var null
+     */
     private $pathModel = null;
+
+    /**
+     * Blade template for render tags.
+     *
+     * @var string
+     */
+    const BLADE_TEMPLATE = 'meta-tags::tags';
 
     /**
      * @return mixed
      */
     public function render()
     {
-        return view('meta-tags::tags', [
+        return view(static::BLADE_TEMPLATE, [
             'tags' => $this->get(),
             'available' => config('meta-tags.available', []),
         ])->render();
@@ -75,16 +105,26 @@ class Builder
     }
 
     /**
+     * @param array $defaultTags
+     */
+    public function setDefault(array $defaultTags = [])
+    {
+        $this->default = array_merge($this->default, $defaultTags);
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function get(): array
     {
-        if ($this->path) {
-            $this->result = $this->getForPath();
-        }
-
         if ($this->entityModel) {
             $this->result = $this->getForEntity();
+        }
+
+        if ($this->path) {
+            $this->result = $this->getForPath();
         }
 
         if ($this->tags) {
@@ -92,13 +132,13 @@ class Builder
         }
 
         if ($this->result) {
-            return $this->result;
+            return $this->getResult();
         }
 
         $this->setPath();
         $this->result = $this->getForPath();
 
-        return $this->result;
+        return $this->getResult();
     }
 
     /**
@@ -131,9 +171,9 @@ class Builder
     public function getForPath(): array
     {
         if ($this->path) {
-            if (! $this->pathModel) { // Singleton
+            if ($this->pathModel === null) { // Singleton
                 $modelClass = config('meta-tags.model', \Fomvasss\LaravelMetaTags\Models\MetaTag::class);
-                $this->pathModel = $modelClass::wherePath($this->path)->first();
+                $this->pathModel = $modelClass::wherePath($this->path)->first() ?? 0;
             }
 
             return array_merge(
@@ -161,6 +201,15 @@ class Builder
      */
     public function getResult(): array
     {
-        return $this->result;
+        $result = array_filter($this->result, function ($tag) {
+            if ($tag !== null && $tag !== '') {
+                return $tag;
+            }
+        });
+
+        return array_merge(
+            $this->default,
+            $result
+        );
     }
 }

@@ -21,11 +21,12 @@ class CreateMetaTagsTable extends Migration
             # node, term,...
             $table->integer('metatagable_id')->nullable();
             $table->string('metatagable_type')->nullable();
-
-            $table->string('h1')->nullable();
-            $table->string('title')->nullable();
-            $table->string('keywords')->nullable();
-            $table->text('description')->nullable();
+            
+            # fields - set in config/meta-tags.php
+            $fields = config('meta-tags.available', []);
+            foreach ($fields as $fieldName => $option) {
+                $table->{$option['form_type'] ?? 'string'}($fieldName)->nullable();
+            }
         });
     }
 
