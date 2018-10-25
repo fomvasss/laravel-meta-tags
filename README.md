@@ -110,7 +110,12 @@ class HomeController extends Controller
             ->paginate();
 
         MetaTag::setPath()  // if argument `setPath()` is empty - path = request()->path()
-            ->setDefault(['title' => 'Search page']);
+            ->setDefault([
+                'title' => 'Search page',
+                'robots' => 'noindex',
+                'og_title' => 'Search page',
+                'canonical' => 'page/search'
+            ]);
         
         return view('index', compact('articles'));
     }
@@ -189,3 +194,7 @@ Similarly:
         ->render()
 !!}
 ```
+
+## Links
+
+* [Use url-aliases in Laravel](https://github.com/fomvasss/laravel-url-aliases)
