@@ -173,10 +173,9 @@ Also you can use helper `meta_tag_prepare_path()` for clear url path before seve
         <meta charset="utf-8" />
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         
-        @php
-            MetaTag::setEntity($article)
-            MetaTag::setDefault(['description' => 'My custom meta tag'])
-        @endphp
+        @php(MetaTag::setEntity($article))
+        @php(MetaTag::setDefault(['description' => 'My default meta tag']))
+        
         {!! MetaTag::render() !!}
         
     </head>
@@ -190,11 +189,11 @@ Similarly:
 ```php
 {!!
     MetaTag::setEntity($article)
-        ->setTags(['description' => 'My custom meta tag'])
+        ->setDefault(['description' => 'My default meta tag'])
         ->render()
 !!}
 ```
 
 ## Links
 
-* [Use url-aliases in Laravel](https://github.com/fomvasss/laravel-url-aliases)
+* [Use perfect package for url-aliases](https://github.com/fomvasss/laravel-url-aliases)
