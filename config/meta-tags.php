@@ -7,17 +7,27 @@ return [
     'model' => \Fomvasss\LaravelMetaTags\Models\MetaTag::class,
 
     /*
-     * Available metatags (for migration, render in blade,...)
+     * Available metatags (for migration, render in blade,...) - uncoment nedded:
      */
     'available' => [
         'title' => ['title' => 'Title', 'max' => 65, 'form_type' => 'string',],
         'description' => ['title' => 'Description', 'max' => 300, 'form_type' => 'text',],
         'keywords' => ['title' => 'Keywords',],
-        
-//        'robots' => ['title' => 'Robots', 'max' => 65, 'form_type' => 'string',],
-//        'canonical' => ['title' => 'Canonical link', 'max' => 65, 'form_type' => 'string',],
-        
 //        'h1' => ['title' => 'H1', 'max' => 191, 'form_type' => 'string',],
+
+        /*
+         * Robots tag value: 'none', 'all', 'index', 'noindex', 'nofollow', 'follow',
+         */
+//        'robots' => ['title' => 'Robots', 'max' => 65, 'form_type' => 'string',],
+    
+        /*
+         * Canonical link 
+         */
+//        'canonical' => ['title' => 'Canonical link', 'max' => 65, 'form_type' => 'string',],
+    
+        /*
+         * OG-tags 
+         */
 //        'og_title' => ['title' => 'OG-title', 'type' => 'og'],
 //        'og_description' => ['title' => 'OG-description', 'type' => 'og'],
 //        'og_type' => ['title' => 'OG-type', 'type' => 'og'],

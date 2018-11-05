@@ -23,7 +23,7 @@ class Builder
      *
      * @var string
      */
-    protected $path = '';
+    protected $path;
 
     /**
      * Force set tags.
@@ -49,7 +49,7 @@ class Builder
     /**
      * @var null
      */
-    private $pathModel = null;
+    private $pathModel;
 
     /**
      * Blade template for render tags.
@@ -170,8 +170,8 @@ class Builder
      */
     public function getForPath(): array
     {
-        if ($this->path) {
-            if ($this->pathModel === null) { // Singleton
+        if (isset($this->path)) {
+            if (! isset($this->pathModel)) { // Singleton
                 $modelClass = config('meta-tags.model', \Fomvasss\LaravelMetaTags\Models\MetaTag::class);
                 $this->pathModel = $modelClass::wherePath($this->path)->first() ?? 0;
             }

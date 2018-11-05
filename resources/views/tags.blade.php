@@ -2,7 +2,7 @@
     @foreach($available as $key => $option)
         @isset($tags[$key])
             @if($key === 'canonical'){{-- Canonical link --}}
-                @if (!empty($tags[$key]) && url($tags[$key]) == \Illuminate\Support\Facades\Request::url() && url($tags[$key]) != \Illuminate\Support\Facades\Request::fullUrl())
+                @if (! empty($tags[$key]) && url($tags[$key]) == \Illuminate\Support\Facades\Request::url() && url($tags[$key]) != \Illuminate\Support\Facades\Request::fullUrl())
                     <link rel="canonical" href="{{ url($tags[$key]) }}"/>
                 @endif
             @elseif($key === 'title'){{-- Title page --}}

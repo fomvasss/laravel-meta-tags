@@ -15,14 +15,14 @@ class CreateMetaTagsTable extends Migration
     {
         Schema::create('meta_tags', function (Blueprint $table) {
             $table->increments('id');
-            # url path
+            // url path
             $table->string('path')->nullable();
 
-            # node, term,...
+            // node, term,...
             $table->integer('metatagable_id')->nullable();
             $table->string('metatagable_type')->nullable();
             
-            # fields - set in config/meta-tags.php
+            // fields - set in config/meta-tags.php
             $fields = config('meta-tags.available', []);
             foreach ($fields as $fieldName => $option) {
                 $table->{$option['form_type'] ?? 'string'}($fieldName)->nullable();
