@@ -66,6 +66,7 @@ class Builder
         return view(static::BLADE_TEMPLATE, [
             'tags' => $this->get(),
             'available' => config('meta-tags.available', []),
+            'path' => $this->path,
         ])->render();
     }
 
@@ -81,6 +82,8 @@ class Builder
     }
 
     /**
+     * Set current path.
+     * 
      * @param string $path
      * @return $this
      */

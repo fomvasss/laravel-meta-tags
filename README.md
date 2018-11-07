@@ -186,11 +186,20 @@ Also you can use helper `meta_tag_prepare_path()` for clear url path before seve
 ```
 
 Similarly:
-```php
+```$xslt
 {!!
-    MetaTag::setEntity($article)
+    \MetaTag::setEntity($article)
         ->setDefault(['description' => 'My default meta tag'])
         ->render()
+    !!}
+```
+
+```$xslt
+{!! 
+    \MetaTag::setPath('articles')
+        ->setDefault(['robots' => 'follow', 'canonical' => 'articles'])
+        ->setDefault(['title' => 'All articles'])
+        ->render() 
 !!}
 ```
 

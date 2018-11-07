@@ -25,7 +25,9 @@ class CreateMetaTagsTable extends Migration
             // fields - set in config/meta-tags.php
             $fields = config('meta-tags.available', []);
             foreach ($fields as $fieldName => $option) {
-                $table->{$option['form_type'] ?? 'string'}($fieldName)->nullable();
+                if (empty($option['form_type']) || $option['form_type'] == 'og') {
+                    $table->{$option['form_type'] ?? 'string'}($fieldName)->nullable();
+                }
             }
         });
     }
