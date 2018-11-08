@@ -35,7 +35,7 @@ return [
          |  OG-tags
          | -----------------------------------------------------------------
          */
-        // 'fb_app_id' => ['title' => 'OG-title', 'type' => 'fb']
+        // 'fb_app_id' => ['title' => 'OG-title', 'type' => 'fb'], // not saved in meta_tags table!
         // 'og_title' => ['title' => 'OG-title', 'type' => 'og'],
         // 'og_description' => ['title' => 'OG-description', 'type' => 'og'],
         // 'og_type' => ['title' => 'OG-type', 'type' => 'og'],
@@ -47,9 +47,19 @@ return [
         // 'og_site_name' => ['title' => 'OG-site_name', 'default' => '[site:name]', 'type' => 'og'],
         // 'og_video' => ['title' => 'OG-video',  'type' => 'og'],
     ],
+
+    'default' => [
+        'og_image' => [
+            'type' => 'image/png',
+            'width' => '780',
+            'height' => '780',
+        ],
+        'fb_app_id' => '',
+    ],
     
     /* -----------------------------------------------------------------
      |  Available robots elements (example, for user admin form,...)
+     |  This list is a sample and is not used in the package
      | -----------------------------------------------------------------
      */
     'robots_element' => ['none', 'all', 'index', 'noindex', 'nofollow', 'follow']

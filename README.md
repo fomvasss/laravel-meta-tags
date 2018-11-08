@@ -186,7 +186,7 @@ Also you can use helper `meta_tag_prepare_path()` for clear url path before seve
 ```
 
 Similarly:
-```$xslt
+```blade
 {!!
     \MetaTag::setEntity($article)
         ->setDefault(['description' => 'My default meta tag'])
@@ -194,11 +194,15 @@ Similarly:
     !!}
 ```
 
-```$xslt
+```blade
 {!! 
     \MetaTag::setPath('articles')
-        ->setDefault(['robots' => 'follow', 'canonical' => 'articles'])
+        ->setDefault(['robots' => 'follow', 'canonical' => 'page/articles'])
         ->setDefault(['title' => 'All articles'])
+        ->setDefault(['fb_app_id' => config('meta-tags.default.fb_app_id'),])
+        ->setDefault(['og_title' => 'All articles'])
+        ->setDefault(['og_locale' => 'de'])
+        ->setDefault(['og_image' => 'files/images/5be3d92e02a55890e4301ed4.jpg', 'og_image_height' => 123])
         ->render() 
 !!}
 ```

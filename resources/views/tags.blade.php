@@ -3,10 +3,10 @@
         $currentUrl = $path ? url($path) : \Illuminate\Support\Facades\Request::url();
     @endphp
 
-    @foreach($available as $key => $option)
-        @isset($tags[$key])
+    @foreach($config['available'] ?? [] as $key => $option)
+        @if (isset($tags[$key]))
             @if($key === 'canonical'){{-- Canonical link --}}
-                @if (! empty($tags[$key]) && url($tags[$key]) == $currentUrl && url($tags[$key]) != \Illuminate\Support\Facades\Request::fullUrl())
+                @if (! empty($tags[$key]) && url($tags[$key]) == $currentUrl /*&& url($tags[$key]) != \Illuminate\Support\Facades\Request::fullUrl()*/)
                     <link rel="canonical" href="{{ url($tags[$key]) }}"/>
                 @endif
             @elseif($key === 'title'){{-- Title page --}}
@@ -15,16 +15,21 @@
                 <meta name="{{$key}}" content="{{ $tags[$key] ?: 'follow' }}" />
             @elseif (empty($option['type'])){{-- Description, keywords, ... --}}
                 <meta name="{{$key}}" content="{{ $tags[$key] }}" />
-            @elseif ($option['type'] == 'fb' && ! empty($tags[$key])){{-- FB ID tag --}}
-                <meta property="fb:app_id" content="{{ $tags[$key] }}" />
+            @elseif ($key == 'fb_app_id'/* && ! empty($tags[$key])*/){{-- FB ID tag --}}
+                <meta property="fb:app_id" content="{{ $tags[$key] ?? $config['default']['fb_app_id'] ?? '' }}" />
             @elseif ($option['type'] == 'og'){{-- OG-tags --}}
-                @if($key === 'og_url' && empty($tags[$key]))
-                    <meta property="og:url" content="{{ $currentUrl }}" />
+                @if($key === 'og_url')
+                    <meta property="og:url" content="{{ $tags[$key] ? url($tags[$key]) : $currentUrl }}" />
+                @elseif($key === 'og_image' && ! empty($tags[$key]))
+                    <meta property="og:image" content="{{ url($tags[$key]) }}" />
+                    <meta property="og:image:type" content="{{ $tags['og_image_type'] ?? $config['default']['og_image']['type'] ?? 'image/png' }}">
+                    <meta property="og:image:width" content="{{ $tags['og_image_width'] ?? $config['default']['og_image']['width'] ?? 780 }}">
+                    <meta property="og:image:height" content="{{ $tags['og_image_height'] ?? $config['default']['og_image']['height'] ?? 780 }}">
                 @else
                     <meta property="{{str_replace_first('og_', 'og:', $key)}}" content="{{ $tags[$key] }}" />
                 @endif
             @endif
-        @endisset
+        @endif
     @endforeach
 @else
     <title>{{ config('app.name') }}</title>
