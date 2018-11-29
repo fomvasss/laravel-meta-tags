@@ -14,28 +14,34 @@ return [
      | -----------------------------------------------------------------
      */
     'available' => [
-        'title' => ['title' => 'Title', 'max' => 65, 'form_type' => 'string',],
-        'description' => ['title' => 'Description', 'max' => 300, 'form_type' => 'text',],
-        'keywords' => ['title' => 'Keywords',],
-        // 'h1' => ['title' => 'H1', 'max' => 191, 'form_type' => 'string',],
+        // 'h1' => ['title' => 'H1'], // it is not meta-tag!
+
+        /* -----------------------------------------------------------------
+         |  Default meta-tags
+         | -----------------------------------------------------------------
+         */
+        'title' => ['title' => 'Title'], // recommend max => 60
+        'description' => ['title' => 'Description'], // recommend max => 300
+        'keywords' => ['title' => 'Keywords',], // recommend max => 300
         
         /* -----------------------------------------------------------------
          |  Robots tag value: 'none', 'all', 'index', 'noindex', 'nofollow', 'follow',
          | -----------------------------------------------------------------
          */
-        // 'robots' => ['title' => 'Robots', 'max' => 65, 'form_type' => 'string',],
+        // 'robots' => ['title' => 'Robots'],
     
         /* -----------------------------------------------------------------
          |  Canonical link
          | -----------------------------------------------------------------
          */
-        // 'canonical' => ['title' => 'Canonical link', 'max' => 65, 'form_type' => 'string',],
+        // 'canonical' => ['title' => 'Canonical link'],
     
         /* -----------------------------------------------------------------
          |  OG-tags
          | -----------------------------------------------------------------
          */
-        // 'fb_app_id' => ['title' => 'OG-title', 'type' => 'fb'], // not saved in meta_tags table!
+        // 'fb_app_id' => ['title' => 'OG-title', 'type' => 'fb'], // do not saved in DB meta_tags table, saved, for example, in config!
+
         // 'og_title' => ['title' => 'OG-title', 'type' => 'og'],
         // 'og_description' => ['title' => 'OG-description', 'type' => 'og'],
         // 'og_type' => ['title' => 'OG-type', 'type' => 'og'],
@@ -59,7 +65,7 @@ return [
     
     /* -----------------------------------------------------------------
      |  Available robots elements (example, for user admin form,...)
-     |  This list is a sample and is not used in the package
+     |  Next list is a sample and don't used in this package
      | -----------------------------------------------------------------
      */
     'robots_element' => ['none', 'all', 'index', 'noindex', 'nofollow', 'follow']

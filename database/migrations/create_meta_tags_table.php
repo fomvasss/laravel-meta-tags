@@ -15,20 +15,36 @@ class CreateMetaTagsTable extends Migration
     {
         Schema::create('meta_tags', function (Blueprint $table) {
             $table->increments('id');
-            // url path
+
+            // url path - without domain
             $table->string('path')->nullable();
 
-            // node, term,...
+            // metatagable: node, term,...
             $table->integer('metatagable_id')->nullable();
             $table->string('metatagable_type')->nullable();
+
+            // it is not meta-tag!
+            $table->string('h1')->nullable();
+
+            // default meta-tags
+            $table->string('title')->nullable();
+            $table->string('keywords')->nullable();
+            $table->text('description')->nullable();
             
-            // fields - set in config/meta-tags.php
-            $fields = config('meta-tags.available', []);
-            foreach ($fields as $fieldName => $option) {
-                if (empty($option['form_type']) || $option['form_type'] == 'og') {
-                    $table->{$option['form_type'] ?? 'string'}($fieldName)->nullable();
-                }
-            }
+            //$table->string('robots')->nullable();
+            //$table->string('canonical')->nullable();
+
+            //$table->string('og_title')->nullable();
+            //$table->text('og_description')->nullable();
+            //$table->string('og_type')->nullable();
+            //$table->string('og_image')->nullable();
+            //$table->string('og_url')->nullable();
+            //$table->string('og_audio')->nullable();
+            //$table->string('og_determiner')->nullable();
+            //$table->string('og_locale')->nullable();
+            //$table->string('og_site_name')->nullable();
+            //$table->string('og_video')->nullable();
+            // ... OG`s from config/meta-tags.php `available`
         });
     }
 

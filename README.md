@@ -18,20 +18,30 @@ Run from the command line:
 composer require fomvasss/laravel-meta-tags
 ```
 
-### Publish the configurations
-
-Run this on the command line:
-
+If you want to use the facade, add this to de bottom of `config/app.php` And, for convenience, add a facade alias to this same file at the bottom:
+```php
+'MetaTag' => Fomvasss\LaravelMetaTags\Facade::class
 ```
+
+
+### Publish and settings
+
+1) Publish assets - run this on the command line:
+
+```bash
 php artisan vendor:publish --provider="Fomvasss\LaravelMetaTags\ServiceProvider"
 ```
 - A configuration file will be publish to `config/meta-tags.php`.
-- A migration file will be publish to `database/migrations/DATE_NOV_create_meta_tags_table.php`.
-- A blade template file will be publish to `resources/views/vondor/meta-tags/tags.blade.php`.
+- A migration file will be publish to `database/migrations/DATE_NOW_create_meta_tags_table.php`.
+- A customizable blade template file will be publish to `resources/views/vondor/meta-tags/tags.blade.php`.
 
-After publish, edit `config/meta-tags.php` - set available tags - uncomment needed
+2) Edit assets:
 
-And edit (if need) and run migrate:
+ - Set available tags in`config/meta-tags.php` - uncomment needed
+ - If needed - set own model class for meta-tags in`config/meta-tags.php`
+ - Edit migration meta_tags file - set available table field tags - uncomment needed
+
+3) Run migration
 ```
 php artisan migrate
 ```
@@ -40,7 +50,7 @@ php artisan migrate
 
 #### app/Models/Article.php
 
-Add `Metatagable` trait in your model:
+Add `Metatagable` trait in your entity model:
 
 ```php
 <?php
@@ -48,6 +58,7 @@ Add `Metatagable` trait in your model:
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Fomvasss\LaravelMetaTags\Traits\Metatagable;
 
 class Article extends Model
 {
@@ -56,9 +67,11 @@ class Article extends Model
 }
 ```
 
-#### app/Http/Controllers/ArticleController.php
+```
+app/Http/Controllers/ArticleController.php:
+```
 
-Use `MetaTag` facade in your controllers or blade templates:
+### Use `MetaTag` facade in your controllers or blade templates
 
 ```php
 <?php 
@@ -87,9 +100,16 @@ class HomeController extends Controller
             //.. article data
         ]));
 
+
         $article->metaTag()->create($request->only([
-            //.. meta tags data
+            //.. meta tags fields
         ]));
+        // similar but harder:
+        Fomvasss\LaravelMetaTags\Models\MetaTag::create([
+            'metatagable_id' => $article->id,
+            'metatagable_type' => get_class($article),
+			//.. meta tags fields
+		]);
         
         //..
     }
@@ -99,7 +119,7 @@ class HomeController extends Controller
         $article = \App\Model\Article::findOrFail($id);
 
         MetaTag::setEntity($article)
-            ->setDefault(['title' => $article->title]); // set custom field
+            ->setDefault(['title' => $article->title]); // if empty $article->metaTag->title - show this title
         
         return view('stow', compact('article'));
     }
@@ -109,7 +129,7 @@ class HomeController extends Controller
         $articles = \App\Model\Article::bySearch($request->q)
             ->paginate();
 
-        MetaTag::setPath()  // if argument `setPath()` is empty - path = request()->path()
+        MetaTag::setPath()  // if argument `setPath()` is empty (or not set) - path = `request()->path()`
             ->setDefault([
                 'title' => 'Search page',
                 'robots' => 'noindex',
@@ -122,11 +142,13 @@ class HomeController extends Controller
 }
 ```
 
-**If you store meta tags for path - set field `path` without domain!**
+> **If you store meta tags for path - set field `path` without domain!**
 
 Also you can use helper `meta_tag_prepare_path()` for clear url path before seved to DB.
 
-#### resources/views/layouts/app.blade.php
+```
+resources/views/layouts/app.blade.php:
+```
 
 ```php
 <!doctype html>
@@ -146,7 +168,7 @@ Also you can use helper `meta_tag_prepare_path()` for clear url path before seve
 </html>
 ```
 
-**Or you can use a pre-made template for output:**
+Or you can use a pre-made template for output:
 
 ```php
 <!doctype html>
@@ -164,7 +186,7 @@ Also you can use helper `meta_tag_prepare_path()` for clear url path before seve
 </html>
 ```
 
-**And you can set meta tags right in the template:**
+And you can set meta tags right in the template:
 
 ```php
 <!doctype html>
@@ -186,6 +208,7 @@ Also you can use helper `meta_tag_prepare_path()` for clear url path before seve
 ```
 
 Similarly:
+
 ```blade
 {!!
     \MetaTag::setEntity($article)
@@ -197,9 +220,9 @@ Similarly:
 ```blade
 {!! 
     \MetaTag::setPath('articles')
+        ->setDefault(['fb_app_id' => config('meta-tags.default.fb_app_id'),])
         ->setDefault(['robots' => 'follow', 'canonical' => 'page/articles'])
         ->setDefault(['title' => 'All articles'])
-        ->setDefault(['fb_app_id' => config('meta-tags.default.fb_app_id'),])
         ->setDefault(['og_title' => 'All articles'])
         ->setDefault(['og_locale' => 'de'])
         ->setDefault(['og_image' => 'files/images/5be3d92e02a55890e4301ed4.jpg', 'og_image_height' => 123])
