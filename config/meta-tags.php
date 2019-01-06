@@ -9,39 +9,26 @@ return [
     'model' => \Fomvasss\LaravelMetaTags\Models\MetaTag::class,
     
     /* -----------------------------------------------------------------
-     |  Available meta-tags (for migration, render in blade,...)
+     |  Available fields (for migration, render in blade,...)
      |  Uncoment nedded:
      | -----------------------------------------------------------------
      */
     'available' => [
-        // 'h1' => ['title' => 'H1'], // it is not meta-tag!
-
-        /* -----------------------------------------------------------------
-         |  Default meta-tags
-         | -----------------------------------------------------------------
-         */
-        'title' => ['title' => 'Title'], // recommend max => 60
-        'description' => ['title' => 'Description'], // recommend max => 300
-        'keywords' => ['title' => 'Keywords',], // recommend max => 300
+        //  Meta-tags
+        'title' => ['title' => 'Title'],                // recommend max => 60
+        'description' => ['title' => 'Description'],    // recommend max => 300
+        'keywords' => ['title' => 'Keywords'],          // recommend max => 300
         
-        /* -----------------------------------------------------------------
-         |  Robots tag value: 'none', 'all', 'index', 'noindex', 'nofollow', 'follow',
-         | -----------------------------------------------------------------
-         */
-        // 'robots' => ['title' => 'Robots'],
-    
-        /* -----------------------------------------------------------------
-         |  Canonical link
-         | -----------------------------------------------------------------
-         */
+        //  SEO fields
+        // 'h1' => ['title' => 'H1'] // only for migration
         // 'canonical' => ['title' => 'Canonical link'],
-    
-        /* -----------------------------------------------------------------
-         |  OG-tags
-         | -----------------------------------------------------------------
-         */
-        // 'fb_app_id' => ['title' => 'OG-title', 'type' => 'fb'], // do not saved in DB meta_tags table, saved, for example, in config!
-
+        // 'robots' => ['title' => 'Robots'],
+        // 'changefreq' => ['title' => 'Changefreq'],
+        // 'priority' => ['title' => 'Priority'],
+        
+        //  OG-tags
+        // 'og_site_name' => ['title' => 'OG-site_name', 'default' => '[site:name]', 'type' => 'og'],
+        // 'og_locale' => ['title' => 'OG-locale', 'type' => 'og'],
         // 'og_title' => ['title' => 'OG-title', 'type' => 'og'],
         // 'og_description' => ['title' => 'OG-description', 'type' => 'og'],
         // 'og_type' => ['title' => 'OG-type', 'type' => 'og'],
@@ -49,9 +36,9 @@ return [
         // 'og_url' => ['title' => 'OG-url', 'type' => 'og'],
         // 'og_audio' => ['title' => 'OG-audio', 'type' => 'og'],
         // 'og_determiner' => ['title' => 'OG-determiner', 'type' => 'og'],
-        // 'og_locale' => ['title' => 'OG-locale', 'type' => 'og'],
-        // 'og_site_name' => ['title' => 'OG-site_name', 'default' => '[site:name]', 'type' => 'og'],
         // 'og_video' => ['title' => 'OG-video',  'type' => 'og'],
+
+        // 'fb_app_id' => ['title' => 'OG-title', 'type' => 'fb'], // do not saved in DB meta_tags table, saved, for example, in config!
     ],
 
     'default' => [
@@ -64,9 +51,14 @@ return [
     ],
     
     /* -----------------------------------------------------------------
-     |  Available robots elements (example, for user admin form,...)
-     |  Next list is a sample and don't used in this package
+     |  This is example, for dashboard SEO form,...
+     |  Available values
+     |  This list is a sample and is not used in the package
      | -----------------------------------------------------------------
      */
-    'robots_element' => ['none', 'all', 'index', 'noindex', 'nofollow', 'follow']
+    'values' => [
+        'robots' => ['none', 'all', 'index', 'noindex', 'nofollow', 'follow',],
+        'changefreq' => ['always', 'daily', 'hourly', 'weekly',],
+        'priority' => [0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 0.9,],
+    ],
 ];

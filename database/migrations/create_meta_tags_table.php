@@ -23,17 +23,19 @@ class CreateMetaTagsTable extends Migration
             $table->integer('metatagable_id')->nullable();
             $table->string('metatagable_type')->nullable();
 
-            // it is not meta-tag!
-            $table->string('h1')->nullable();
-
-            // default meta-tags
+            // Meta-tags
             $table->string('title')->nullable();
             $table->string('keywords')->nullable();
             $table->text('description')->nullable();
             
-            //$table->string('robots')->nullable();
+            // SEO fields
+            $table->string('h1')->nullable();
             //$table->string('canonical')->nullable();
+            //$table->string('robots', 50)->nullable();
+            //$table->string('changefreq', 10)->nullable();
+            //$table->string('priority', 10)->nullable();
 
+            // OG-tags
             //$table->string('og_title')->nullable();
             //$table->text('og_description')->nullable();
             //$table->string('og_type')->nullable();
@@ -44,7 +46,6 @@ class CreateMetaTagsTable extends Migration
             //$table->string('og_locale')->nullable();
             //$table->string('og_site_name')->nullable();
             //$table->string('og_video')->nullable();
-            // ... OG`s from config/meta-tags.php `available`
         });
     }
 
