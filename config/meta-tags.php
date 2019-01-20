@@ -61,4 +61,11 @@ return [
         'changefreq' => ['always', 'daily', 'hourly', 'weekly',],
         'priority' => [0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 0.9,],
     ],
+
+    //'types' => [
+    //    'article_categories' => [
+    //        'model' => \App\Models\Taxonomies\Term::class,
+    //        'where_has' => ['type' => 'categories'],
+    //    ]
+    //],
 ];

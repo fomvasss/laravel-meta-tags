@@ -13,7 +13,7 @@ class MetaTag extends Model
     ];
 
     protected $hidden = [
-        'id', 'path', 'metatagable_id', 'metatagable_type'
+        'metatagable_id', 'metatagable_type'
     ];
 
     public function metatagable()
@@ -23,11 +23,7 @@ class MetaTag extends Model
 
     public function scopeByType($query, string $type = null)
     {
-        if ($type) {    
-            return $query->where('metatagable_type', config("meta-tags.types.$type.model"));
-        }
-
-        return $query->where('metatagable_type', null)->orWhere('metatagable_type', '');
+        return $query->where('metatagable_type', config("meta-tags.types.$type.model"));
     }
 
 
