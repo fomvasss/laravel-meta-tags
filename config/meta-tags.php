@@ -19,13 +19,6 @@ return [
         'description' => ['title' => 'Description'],    // recommend max => 300
         'keywords' => ['title' => 'Keywords'],          // recommend max => 300
         
-        //  SEO fields
-        // 'h1' => ['title' => 'H1'] // only for migration
-        // 'canonical' => ['title' => 'Canonical link'],
-        // 'robots' => ['title' => 'Robots'],
-        // 'changefreq' => ['title' => 'Changefreq'],
-        // 'priority' => ['title' => 'Priority'],
-        
         //  OG-tags
         // 'og_site_name' => ['title' => 'OG-site_name', 'default' => '[site:name]', 'type' => 'og'],
         // 'og_locale' => ['title' => 'OG-locale', 'type' => 'og'],
@@ -37,6 +30,13 @@ return [
         // 'og_audio' => ['title' => 'OG-audio', 'type' => 'og'],
         // 'og_determiner' => ['title' => 'OG-determiner', 'type' => 'og'],
         // 'og_video' => ['title' => 'OG-video',  'type' => 'og'],
+        
+        //  SEO fields
+        // 'h1' => ['title' => 'H1'],
+        // 'canonical' => ['title' => 'Canonical link'],
+        // 'robots' => ['title' => 'Robots'],
+        // 'changefreq' => ['title' => 'Changefreq'],
+        // 'priority' => ['title' => 'Priority'],
 
         // 'fb_app_id' => ['title' => 'OG-title', 'type' => 'fb'], // do not saved in DB meta_tags table, saved, for example, in config!
     ],
@@ -50,6 +50,7 @@ return [
         'fb_app_id' => '',
     ],
     
+    
     /* -----------------------------------------------------------------
      |  This is example, for dashboard SEO form,...
      |  Available values
@@ -61,11 +62,19 @@ return [
         'changefreq' => ['always', 'daily', 'hourly', 'weekly',],
         'priority' => [0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 0.9,],
     ],
-
-    //'types' => [
-    //    'article_categories' => [
-    //        'model' => \App\Models\Taxonomies\Term::class,
-    //        'where_has' => ['type' => 'categories'],
-    //    ]
-    //],
+    
+    /* -----------------------------------------------------------------
+     |  This is example, for dashboard SEO form,...
+     |  Meta-tags for entity types...
+     | -----------------------------------------------------------------
+     */
+    'types' => [
+        'article_categories' => [
+            'model' => \App\Models\Taxonomy\Term::class,
+            'where_has' => ['type' => 'categories'],
+        ],
+        'article' => [
+            'model' => \App\Models\Article::class,
+        ],
+    ],
 ];

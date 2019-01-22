@@ -176,7 +176,11 @@ class Builder
         if (isset($this->path)) {
             if (! isset($this->pathModel)) { // Singleton
                 $modelClass = config('meta-tags.model', \Fomvasss\LaravelMetaTags\Models\MetaTag::class);
-                $this->pathModel = $modelClass::wherePath($this->path)->first() ?? 0;
+                try {
+                    $this->pathModel = $modelClass::wherePath($this->path)->first() ?? 0;
+                } catch (\Exception $e) {
+                    //...
+                }
             }
 
             return array_merge(
