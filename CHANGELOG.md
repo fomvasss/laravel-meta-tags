@@ -1,5 +1,11 @@
 # Changelog Laravel Meta Tags
 
+## 2.0.0 - 2019-02-11
+
+- Added fields `seo_text`, `timestamps`
+- Remove helper `meta_tag_prepare_path`
+- Added support Laravel 5.8
+
 ## 1.2.0 - 2018-10-25
 
 - Added caninical tag

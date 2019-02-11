@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MetaTag extends Model
 {
-    public $timestamps = false;
-
     protected $guarded = [
         'id',
     ];
@@ -25,8 +23,7 @@ class MetaTag extends Model
     {
         return $query->where('metatagable_type', config("meta-tags.types.$type.model"));
     }
-
-
+    
     public function scopeByPath($query, string $path = null)
     {
         return $query->where('path', $path);

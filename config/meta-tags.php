@@ -31,10 +31,13 @@ return [
         // 'og_determiner' => ['title' => 'OG-determiner', 'type' => 'og'],
         // 'og_video' => ['title' => 'OG-video',  'type' => 'og'],
         
-        //  SEO fields
+        //  Additional SEO-fields
         // 'h1' => ['title' => 'H1'],
+        // 'seo_text' => ['title' => 'SEO-text'],
         // 'canonical' => ['title' => 'Canonical link'],
         // 'robots' => ['title' => 'Robots'],
+
+        // Fields for build XML site-map
         // 'changefreq' => ['title' => 'Changefreq'],
         // 'priority' => ['title' => 'Priority'],
 

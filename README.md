@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/fomvasss/laravel-meta-tags.svg?style=for-the-badge)](https://packagist.org/packages/fomvasss/laravel-meta-tags)
 [![Quality Score](https://img.shields.io/scrutinizer/g/fomvasss/laravel-meta-tags.svg?style=for-the-badge)](https://scrutinizer-ci.com/g/fomvasss/laravel-meta-tags)
 
-With this package you can manage Meta Tags from Laravel controllers.
+With this package you can manage meta-tags and SEO-fields from Laravel controllers and "blade" template.
 
 ----------
 
@@ -119,7 +119,12 @@ class HomeController extends Controller
         $article = \App\Model\Article::findOrFail($id);
 
         MetaTag::setEntity($article)
-            ->setDefault(['title' => $article->title]); // if empty $article->metaTag->title - show this title
+            ->setDefault([
+                'title' => $article->title, // if empty $article->metaTag->title - show this title
+			])->setTags([
+				'seo_text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+				'h1' => $article->title,   
+			]);
         
         return view('stow', compact('article'));
     }
@@ -134,7 +139,7 @@ class HomeController extends Controller
                 'title' => 'Search page',
                 'robots' => 'noindex',
                 'og_title' => 'Search page',
-                'canonical' => 'page/search'
+                'canonical' => 'page/search',
             ]);
         
         return view('index', compact('articles'));
@@ -142,15 +147,14 @@ class HomeController extends Controller
 }
 ```
 
-> **If you store meta tags for path - set field `path` without domain!**
-
-Also you can use helper `meta_tag_prepare_path()` for clear url path before seved to DB.
+> **For the package to work correctly, you must save to the database, in the `path` field, only the url-path itself, without a domain and slash'es (/)**
+Example: `https://site.com/some/pages/?page=23` => `some/pages`
 
 ```
 resources/views/layouts/app.blade.php:
 ```
 
-```php
+```blade
 <!doctype html>
 <html lang="en">
     <head>
@@ -168,9 +172,22 @@ resources/views/layouts/app.blade.php:
 </html>
 ```
 
+```
+resources/views/articles/show.blade.php:
+```
+```blade
+@extends('layouts.app')
+@section('content')
+	<h1>{!! MetaTag::get('title') !!}</h1>
+	{!! $article->body !!}
+	<hr>
+	{{ MetaTag::get('seo_text') }}
+@endsection
+```
+
 Or you can use a pre-made template for output:
 
-```php
+```blade
 <!doctype html>
 <html lang="en">
     <head>
@@ -188,7 +205,7 @@ Or you can use a pre-made template for output:
 
 And you can set meta tags right in the template:
 
-```php
+```blade
 <!doctype html>
 <html lang="en">
     <head>

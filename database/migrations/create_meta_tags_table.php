@@ -28,12 +28,15 @@ class CreateMetaTagsTable extends Migration
             $table->string('keywords')->nullable();
             $table->text('description')->nullable();
             
-            // SEO fields
+            // SEO-fields
             $table->string('h1')->nullable();
-            //$table->string('canonical')->nullable();
-            //$table->string('robots', 50)->nullable();
-            //$table->string('changefreq', 10)->nullable();
-            //$table->string('priority', 10)->nullable();
+            $table->text('seo_text')->nullable();
+            $table->string('canonical')->nullable();
+            $table->string('robots', 50)->nullable();
+
+            // Fields for build XML site-map
+            $table->string('changefreq', 10)->nullable();
+            $table->string('priority', 10)->nullable();
 
             // OG-tags
             //$table->string('og_title')->nullable();
@@ -46,6 +49,9 @@ class CreateMetaTagsTable extends Migration
             //$table->string('og_locale')->nullable();
             //$table->string('og_site_name')->nullable();
             //$table->string('og_video')->nullable();
+
+            //for XML site-map "lastmod"
+            $table->timestamps();
         });
     }
 
