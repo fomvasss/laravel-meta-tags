@@ -20,8 +20,7 @@ class CreateMetaTagsTable extends Migration
             $table->string('path')->nullable();
 
             // metatagable: node, term,...
-            $table->integer('metatagable_id')->nullable();
-            $table->string('metatagable_type')->nullable();
+            $table->nullableMorphs('metatagable','metatagable_morphs');
 
             // Meta-tags
             $table->string('title')->nullable();
