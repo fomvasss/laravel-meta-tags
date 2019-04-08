@@ -96,22 +96,15 @@ class HomeController extends Controller
     
     public function store(Request $request)
     {
+    	// create entity
         $article = \App\Model\Article::create($request->only([
             //.. article data
         ]));
 
-
+		// create meta tag for entity
         $article->metaTag()->create($request->only([
             //.. meta tags fields
         ]));
-        // similar but harder:
-        Fomvasss\LaravelMetaTags\Models\MetaTag::create([
-            'metatagable_id' => $article->id,
-            'metatagable_type' => get_class($article),
-			//.. meta tags fields
-		]);
-        
-        //..
     }
 
     public function show($id)
@@ -161,7 +154,7 @@ resources/views/layouts/app.blade.php:
         <meta charset="utf-8" />
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-        <title>{!! MetaTag::get('title') !!}</title>
+        <title>{!! MetaTag::tag('title') !!}</title>
         <meta name="description" content="{!! MetaTag::tag('description') !!}">
         <meta name="keywords" content="{!! MetaTag::tag('keywords') !!}">
         
@@ -178,10 +171,10 @@ resources/views/articles/show.blade.php:
 ```blade
 @extends('layouts.app')
 @section('content')
-	<h1>{!! MetaTag::get('title') !!}</h1>
+	<h1>{!! MetaTag::tag('title') !!}</h1>
 	{!! $article->body !!}
 	<hr>
-	{{ MetaTag::get('seo_text') }}
+	{{ MetaTag::tag('seo_text') }}
 @endsection
 ```
 
