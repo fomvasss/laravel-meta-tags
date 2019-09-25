@@ -20,8 +20,8 @@ class CreateMetaTagsTable extends Migration
             $table->string('path')->nullable();
 
             // metatagable: node, term,...
-            $table->integer('metatagable_id')->nullable();
-            $table->string('metatagable_type')->nullable();
+            $table->integer('model_id')->nullable();
+            $table->string('model_type')->nullable();
 
             // Meta-tags
             $table->string('title')->nullable();
@@ -39,16 +39,16 @@ class CreateMetaTagsTable extends Migration
             $table->string('priority', 10)->nullable();
 
             // OG-tags
-            //$table->string('og_title')->nullable();
-            //$table->text('og_description')->nullable();
-            //$table->string('og_type')->nullable();
-            //$table->string('og_image')->nullable();
-            //$table->string('og_url')->nullable();
-            //$table->string('og_audio')->nullable();
-            //$table->string('og_determiner')->nullable();
-            //$table->string('og_locale')->nullable();
-            //$table->string('og_site_name')->nullable();
-            //$table->string('og_video')->nullable();
+//            $table->string('og_title')->nullable();
+//            $table->text('og_description')->nullable();
+//            $table->string('og_type')->nullable();
+//            $table->string('og_image')->nullable();
+//            $table->string('og_url')->nullable();
+//            $table->string('og_audio')->nullable();
+//            $table->string('og_determiner')->nullable();
+//            $table->string('og_locale')->nullable();
+//            $table->string('og_site_name')->nullable();
+//            $table->string('og_video')->nullable();
 
             //for XML site-map "lastmod"
             $table->timestamps();

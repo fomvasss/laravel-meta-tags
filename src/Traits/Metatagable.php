@@ -8,6 +8,6 @@ trait Metatagable
     {
         $modelClass = config('meta-tags.model', \Fomvasss\LaravelMetaTags\Models\MetaTag::class);
 
-        return $this->morphOne($modelClass, 'metatagable');
+        return $this->morphOne($modelClass, 'model');
     }
 }

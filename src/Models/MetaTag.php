@@ -11,20 +11,20 @@ class MetaTag extends Model
     ];
 
     protected $hidden = [
-        'metatagable_id', 'metatagable_type'
+        'model_id', 'model_type'
     ];
 
     public function metatagable()
     {
-        return $this->morphTo();
+        return $this->morphTo('model');
     }
 
     public function scopeByType($query, string $type = null)
     {
-        return $query->where('metatagable_type', config("meta-tags.types.$type.model"));
+        return $query->where('model_type', config("meta-tags.types.$type.model"));
     }
     
-    public function scopeByPath($query, string $path = null)
+    public function scopeByPath($query, string $path = '/')
     {
         return $query->where('path', $path);
     }

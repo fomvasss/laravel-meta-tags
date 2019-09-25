@@ -3,14 +3,14 @@
 return [
 
     /* -----------------------------------------------------------------
-     |  The default Model metatag
+     |  The default Model meta-tag
      | -----------------------------------------------------------------
      */
     'model' => \Fomvasss\LaravelMetaTags\Models\MetaTag::class,
     
     /* -----------------------------------------------------------------
      |  Available fields (for migration, render in blade,...)
-     |  Uncoment nedded:
+     |  Uncomment needed:
      | -----------------------------------------------------------------
      */
     'available' => [
@@ -20,7 +20,7 @@ return [
         'keywords' => ['title' => 'Keywords'],          // recommend max => 300
         
         //  OG-tags
-        // 'og_site_name' => ['title' => 'OG-site_name', 'default' => '[site:name]', 'type' => 'og'],
+        // 'og_site_name' => ['title' => 'OG-site_name', 'type' => 'og'],
         // 'og_locale' => ['title' => 'OG-locale', 'type' => 'og'],
         // 'og_title' => ['title' => 'OG-title', 'type' => 'og'],
         // 'og_description' => ['title' => 'OG-description', 'type' => 'og'],

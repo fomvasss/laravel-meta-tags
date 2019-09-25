@@ -56,18 +56,36 @@ class Builder
      *
      * @var string
      */
-    const BLADE_TEMPLATE = 'meta-tags::tags';
+    protected $template = 'meta-tags::tags';
 
     /**
      * @return mixed
      */
     public function render()
     {
-        return view(static::BLADE_TEMPLATE, [
+        return view($this->template, [
             'tags' => $this->get(),
-            'config' => config('meta-tags', []),
-            'path' => $this->path,
+            'path' => $this->getPath(),
         ])->render();
+    }
+
+    /**
+     * @param string $template
+     * @return Builder
+     */
+    public function setTemplate(string $template): self
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplate(): string
+    {
+        return $this->template;
     }
 
     /**
@@ -87,13 +105,18 @@ class Builder
      * @param string $path
      * @return $this
      */
-    public function setPath(string $path = '')
+    public function setPath(string $path = null)
     {
         $this->pathModel = null;
 
-        $this->path = $path ?: request()->path();
+        $this->path = $path ?: \Illuminate\Support\Facades\Request::path();
 
         return $this;
+    }
+
+    public function getPath(): string
+    {
+        return $this->path ?: \Illuminate\Support\Facades\Request::path();
     }
 
     /**

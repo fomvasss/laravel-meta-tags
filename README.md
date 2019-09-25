@@ -18,12 +18,6 @@ Run from the command line:
 composer require fomvasss/laravel-meta-tags
 ```
 
-If you want to use the facade, add this to de bottom of `config/app.php` And, for convenience, add a facade alias to this same file at the bottom:
-```php
-'MetaTag' => Fomvasss\LaravelMetaTags\Facade::class
-```
-
-
 ### Publish and settings
 
 1) Publish assets - run this on the command line:
@@ -39,16 +33,16 @@ php artisan vendor:publish --provider="Fomvasss\LaravelMetaTags\ServiceProvider"
 
  - Set available tags in`config/meta-tags.php` - uncomment needed
  - If needed - set own model class for meta-tags in`config/meta-tags.php`
- - Edit migration meta_tags file - set available table field tags - uncomment needed
+ - Edit migration `meta_tags` file - set available field tags - uncomment needed
 
 3) Run migration
 ```
 php artisan migrate
 ```
 
-## Examples usage
+## Integrate & usage
 
-#### app/Models/Article.php
+### Usage in Eloquent models: `app/Models/Article.php`
 
 Add `Metatagable` trait in your entity model:
 
@@ -71,7 +65,7 @@ class Article extends Model
 app/Http/Controllers/ArticleController.php:
 ```
 
-### Use `MetaTag` facade in your controllers or blade templates
+### Usage facade `MetaTag` in controllers: `app/Models/Article.php`
 
 ```php
 <?php 
@@ -110,12 +104,13 @@ class HomeController extends Controller
     public function show($id)
     {
         $article = \App\Model\Article::findOrFail($id);
-
+        
+        // Set tags for showing
         MetaTag::setEntity($article)
             ->setDefault([
                 'title' => $article->title, // if empty $article->metaTag->title - show this title
 			])->setTags([
-				'seo_text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+				'seo_text' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
 				'h1' => $article->title,   
 			]);
         
@@ -126,7 +121,8 @@ class HomeController extends Controller
     {
         $articles = \App\Model\Article::bySearch($request->q)
             ->paginate();
-
+        
+        // Set tags for showing
         MetaTag::setPath()  // if argument `setPath()` is empty (or not set) - path = `request()->path()`
             ->setDefault([
                 'title' => 'Search page',
@@ -140,12 +136,34 @@ class HomeController extends Controller
 }
 ```
 
-> **For the package to work correctly, you must save to the database, in the `path` field, only the url-path itself, without a domain and slash'es (/)**
-Example: `https://site.com/some/pages/?page=23` => `some/pages`
+For the package to work correctly, you must save to the database, in the `path` field, only the url-path itself, without a domain and trim slash'es (`/`)
 
+Example:
+- `https://site.com/some/pages/?page=23` => `some/pages`
+- `https://site.com/some/pages` => `/`
+
+
+### Usage facade `MetaTag` in blade templates (`resources/views/layouts/app.blade.php`)
+
+Simple and efficient:
+
+```blade
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+        {!! MetaTag::render() !!}
+        
+    </head>
+    <body>
+        @yield('content')
+    </body>
+</html>
 ```
-resources/views/layouts/app.blade.php:
-```
+
+Or output one by one manually:
 
 ```blade
 <!doctype html>
@@ -165,35 +183,17 @@ resources/views/layouts/app.blade.php:
 </html>
 ```
 
+Another example: `resources/views/articles/show.blade.php`:
 ```
-resources/views/articles/show.blade.php:
+:
 ```
 ```blade
 @extends('layouts.app')
 @section('content')
 	<h1>{!! MetaTag::tag('title') !!}</h1>
-	{!! $article->body !!}
-	<hr>
-	{{ MetaTag::tag('seo_text') }}
+	<div>{!! $article->body !!}</div>
+	<div>{{ MetaTag::tag('seo_text') }}</div>
 @endsection
-```
-
-Or you can use a pre-made template for output:
-
-```blade
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-
-        {!! MetaTag::render() !!}
-        
-    </head>
-    <body>
-        @yield('content')
-    </body>
-</html>
 ```
 
 And you can set meta tags right in the template:
