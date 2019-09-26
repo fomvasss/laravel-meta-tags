@@ -65,7 +65,7 @@ class Article extends Model
 app/Http/Controllers/ArticleController.php:
 ```
 
-### Usage facade `MetaTag` in controllers: `app/Models/Article.php`
+### Usage facade `MetaTag` in controllers: `app/Http/Controllers/ArticleController.php`
 
 ```php
 <?php 
@@ -74,7 +74,7 @@ namespace App\Http\Controllers;
 
 use MetaTag;
 
-class HomeController extends Controller 
+class ArticleController extends Controller 
 {
     public function index()
     {
@@ -143,7 +143,7 @@ Example:
 - `https://site.com/some/pages` => `/`
 
 
-### Usage facade `MetaTag` in blade templates (`resources/views/layouts/app.blade.php`)
+### Usage facade `MetaTag` in blade templates: `resources/views/layouts/app.blade.php`
 
 Simple and efficient:
 
@@ -183,10 +183,8 @@ Or output one by one manually:
 </html>
 ```
 
-Another example: `resources/views/articles/show.blade.php`:
-```
-:
-```
+Another example: `resources/views/articles/show.blade.php`
+
 ```blade
 @extends('layouts.app')
 @section('content')
