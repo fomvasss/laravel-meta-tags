@@ -16,14 +16,14 @@ class MetaTag extends Model
 
     public function metatagable()
     {
-        return $this->morphTo('model');
+        return $this->morphTo(config('meta-tags.database.morph_column.name'));
     }
 
     public function scopeByType($query, string $type = null)
     {
-        return $query->where('model_type', config("meta-tags.types.$type.model"));
+        return $query->where(config('meta-tags.database.morph_column.name').'_type', config("meta-tags.types.$type.model"));
     }
-    
+
     public function scopeByPath($query, string $path = '/')
     {
         return $query->where('path', $path);

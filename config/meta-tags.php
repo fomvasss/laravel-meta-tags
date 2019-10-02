@@ -7,6 +7,13 @@ return [
      | -----------------------------------------------------------------
      */
     'model' => \Fomvasss\LaravelMetaTags\Models\MetaTag::class,
+
+    'database' => [
+        'morph_column' => [
+            'name' => 'model',
+            'index' => 'model_morphs',
+        ],
+    ],
     
     /* -----------------------------------------------------------------
      |  Available fields (render in blade,...)
