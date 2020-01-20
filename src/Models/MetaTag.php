@@ -16,7 +16,7 @@ class MetaTag extends Model
 
     public function metatagable()
     {
-        return $this->morphTo('model');
+        return $this->morphTo('metatagable', 'model_type', 'model_id');
     }
 
     public function scopeByType($query, string $type = null)
