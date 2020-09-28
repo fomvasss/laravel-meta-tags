@@ -40,6 +40,14 @@ php artisan vendor:publish --provider="Fomvasss\LaravelMetaTags\ServiceProvider"
 php artisan migrate
 ```
 
+---
+
+## Upgrading
+
+When upgrading from v2 to v3, please see the [UPGRADING.md](UPGRADING.md)
+
+---
+
 ## Integrate & usage
 
 ### Usage in Eloquent models: `app/Models/Article.php`
