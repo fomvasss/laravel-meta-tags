@@ -23,6 +23,11 @@ If you want to use the facade, add this to de bottom of `config/app.php` And, fo
 'MetaTag' => Fomvasss\LaravelMetaTags\Facade::class
 ```
 
+For Laravel 7 and newer need to install `laravel/helpers`
+```bash
+composer require laravel/helpers
+```
+
 
 ### Publish and settings
 
