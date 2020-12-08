@@ -1,14 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fomvasss
- * Date: 23.10.18
- * Time: 21:25
- */
 
 namespace Fomvasss\LaravelMetaTags;
 
 use App\Models\MetaTag;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class Builder
@@ -63,9 +58,10 @@ class Builder
      */
     public function render()
     {
-        return view($this->template, [
+        return view($this->getTemplate(), [
             'tags' => $this->get(),
             'path' => $this->getPath(),
+            'entity' => $this->entityModel,
         ])->render();
     }
 
@@ -182,10 +178,7 @@ class Builder
     public function getForEntity(): array
     {
         if ($this->entityModel && ($tags = $this->entityModel->metaTag)) {
-            return array_merge(
-                $this->getResult(),
-                $tags->toArray()
-            );
+            return array_merge($this->getResult(), $tags->toArray());
         }
 
         return [];
@@ -197,7 +190,7 @@ class Builder
     public function getForPath(): array
     {
         if (isset($this->path)) {
-            if (! isset($this->pathModel)) { // Singleton
+            if (!isset($this->pathModel)) { // Singleton
                 $modelClass = config('meta-tags.model', \Fomvasss\LaravelMetaTags\Models\MetaTag::class);
                 try {
                     $this->pathModel = $modelClass::wherePath($this->path)->first() ?? 0;
@@ -220,10 +213,7 @@ class Builder
      */
     protected function getTags(): array
     {
-        return array_merge(
-            $this->getResult(),
-            $this->tags
-        );
+        return array_merge($this->getResult(), $this->tags);
     }
 
     /**
@@ -237,9 +227,6 @@ class Builder
             }
         });
 
-        return array_merge(
-            $this->default,
-            $result
-        );
+        return array_merge($this->default, $result);
     }
 }

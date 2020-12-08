@@ -135,7 +135,8 @@ class ArticleController extends Controller
             ->setDefault([
                 'title' => 'Search page',
                 'robots' => 'noindex',
-                'og_title' => 'Search page',
+                'og_title' => 'Search page OG',
+                'twitter_title' => 'Search page Twitter',
                 'canonical' => 'page/search',
             ]);
         
@@ -236,7 +237,6 @@ Similarly:
 ```blade
 {!! 
     \MetaTag::setPath('articles')
-        ->setDefault(['fb_app_id' => config('meta-tags.default.fb_app_id'),])
         ->setDefault(['robots' => 'follow', 'canonical' => 'page/articles'])
         ->setDefault(['title' => 'All articles'])
         ->setDefault(['og_title' => 'All articles'])

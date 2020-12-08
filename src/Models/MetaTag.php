@@ -6,19 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class MetaTag extends Model
 {
-    protected $guarded = [
-        'id',
-    ];
-
-    protected $hidden = [
-        'model_id', 'model_type'
-    ];
+    protected $guarded = ['id'];
 
     public function metatagable()
     {
         return $this->morphTo('metatagable', 'model_type', 'model_id');
     }
 
+    /**
+     * TODO: Deprecated
+     * 
+     * @param $query
+     * @param string|null $type
+     * @return mixed
+     */
     public function scopeByType($query, string $type = null)
     {
         return $query->where('model_type', config("meta-tags.types.$type.model"));

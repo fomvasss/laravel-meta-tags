@@ -14,7 +14,7 @@ class CreateMetaTagsTable extends Migration
     public function up()
     {
         Schema::create('meta_tags', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
 
             // url path - without domain
             $table->string('path')->nullable();
@@ -32,7 +32,7 @@ class CreateMetaTagsTable extends Migration
             $table->string('h1')->nullable();
             $table->text('seo_text')->nullable();
             $table->string('canonical')->nullable();
-            $table->string('robots', 50)->nullable();
+            $table->string('robots')->nullable();
 
             // Fields for build XML site-map
             $table->string('changefreq', 10)->nullable();
@@ -50,8 +50,17 @@ class CreateMetaTagsTable extends Migration
 //            $table->string('og_site_name')->nullable();
 //            $table->string('og_video')->nullable();
 
-            //for XML site-map "lastmod"
-            $table->timestamps();
+            // Twitter tags
+//            $table->string('twitter_title')->nullable();
+//            $table->text('twitter_description')->nullable();
+//            $table->string('twitter_card')->nullable();
+//            $table->string('twitter_site')->nullable();
+//            $table->string('twitter_creator')->nullable();
+//            $table->string('twitter_image')->nullable();
+//            $table->string('twitter_domain')->nullable();
+
+            // for XML site-map "lastmod"
+            $table->timestamps()->nullable();
         });
     }
 
