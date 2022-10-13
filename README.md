@@ -1,4 +1,4 @@
-Development and support of this package is discontinued! Use a better SEO solution [fomvasss/laravel-seo](https://github.com/fomvasss/laravel-seo)
+**Development and support of this package is discontinued! Use a better solution [fomvasss/laravel-seo](https://github.com/fomvasss/laravel-seo)**
 
 
 # Laravel Meta Tags
