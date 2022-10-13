@@ -1,4 +1,5 @@
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
+Development and support of this package is discontinued! Use a better SEO solution [fomvasss/laravel-seo](https://github.com/fomvasss/laravel-seo)
+
 
 # Laravel Meta Tags
 
