@@ -20,13 +20,13 @@
                     <meta property="og:image:width" content="{{ $tags['og_image_width'] ?? config('meta-tags.default.og_image.width', 780) }}">
                     <meta property="og:image:height" content="{{ $tags['og_image_height'] ?? config('meta-tags.default.og_image.height', 780) }}">
                 @else
-                    <meta property="{{ \Str::replaceFirst('og_', 'og:', $key) }}" content="{{ $tags[$key] }}"/>
+                    <meta property="{{ \Illuminate\Support\Str::replaceFirst('og_', 'og:', $key) }}" content="{{ $tags[$key] }}"/>
                 @endif
             @elseif (preg_match('/^twitter_\w+/', $key))
                 @if($key === 'twitter_image' && !empty($tags[$key]))
                     <meta name="twitter_image" content="{{ url($tags[$key]) }}" />
                 @else
-                    <meta name="{{ \Str::replaceFirst('twitter_', 'twitter:', $key) }}" content="{{ $tags[$key] }}" />
+                    <meta name="{{ \Illuminate\Support\Str::replaceFirst('twitter_', 'twitter:', $key) }}" content="{{ $tags[$key] }}" />
                 @endif
             @endif
         @endif

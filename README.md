@@ -1,4 +1,4 @@
-**Development and support of this package is discontinued! Use a better solution [fomvasss/laravel-seo](https://github.com/fomvasss/laravel-seo)**
+**Recommended: use [fomvasss/laravel-seo](https://github.com/fomvasss/laravel-seo).**
 
 
 # Laravel Meta Tags
@@ -9,7 +9,17 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/fomvasss/laravel-meta-tags.svg?style=for-the-badge)](https://packagist.org/packages/fomvasss/laravel-meta-tags)
 [![Quality Score](https://img.shields.io/scrutinizer/g/fomvasss/laravel-meta-tags.svg?style=for-the-badge)](https://scrutinizer-ci.com/g/fomvasss/laravel-meta-tags)
 
-With this package you can manage meta-tags and SEO-fields from Laravel controllers and "blade" template.
+## Support
+
+If this package is useful to you, consider supporting its development:
+
+[![Monobank](https://img.shields.io/badge/Donate-Monobank-black)](https://send.monobank.ua/jar/5xsqtHvVrY)
+[![Ko-Fi](https://img.shields.io/badge/Donate-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/fomvasss)
+[![USDT TRC20](https://img.shields.io/badge/Donate-USDT%20TRC20-26A17B?logo=tether&logoColor=white)](https://link.trustwallet.com/send?coin=195&address=THLgp6DxiAtbNHvgnKV56vk1L38UuUagKf&token_id=TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t)
+
+> USDT TRC20 address: `THLgp6DxiAtbNHvgnKV56vk1L38UuUagKf`
+
+This package lets you manage meta tags and SEO fields from Laravel controllers and Blade templates.
 
 ----------
 
@@ -21,25 +31,25 @@ Run from the command line:
 composer require fomvasss/laravel-meta-tags
 ```
 
-### Publish and settings
+### Publish and Configure
 
-1) Publish assets - run this on the command line:
+1) Publish assets from the command line:
 
 ```bash
 php artisan vendor:publish --provider="Fomvasss\LaravelMetaTags\ServiceProvider"
 ```
-- A configuration file will be publish to `config/meta-tags.php`.
-- A migration file will be publish to `database/migrations/DATE_NOW_create_meta_tags_table.php`.
-- A customizable blade template file will be publish to `resources/views/vondor/meta-tags/tags.blade.php`.
+- A configuration file will be published to `config/meta-tags.php`.
+- A migration file will be published to `database/migrations/DATE_NOW_create_meta_tags_table.php`.
+- A customizable Blade template file will be published to `resources/views/vendor/meta-tags/tags.blade.php`.
 
-2) Edit assets:
+2) Adjust published assets:
 
- - Set available tags in`config/meta-tags.php` - uncomment needed
- - If needed - set own model class for meta-tags in`config/meta-tags.php`
- - Edit migration `meta_tags` file - set available field tags - uncomment needed
+- Set available tags in `config/meta-tags.php` (uncomment what you need).
+- Optionally set your own meta tag model class in `config/meta-tags.php`.
+- Edit the `meta_tags` migration and uncomment the fields you need.
 
-3) Run migration
-```
+3) Run migration:
+```bash
 php artisan migrate
 ```
 
@@ -51,7 +61,7 @@ When upgrading from v2 to v3, please see the [UPGRADING.md](UPGRADING.md)
 
 ---
 
-## Integrate & usage
+## Integration & Usage
 
 ### Usage in Eloquent models: `app/Models/Article.php`
 
@@ -72,11 +82,9 @@ class Article extends Model
 }
 ```
 
-```
-app/Http/Controllers/ArticleController.php:
-```
+Controller example: `app/Http/Controllers/ArticleController.php`
 
-### Usage facade `MetaTag` in controllers: `app/Http/Controllers/ArticleController.php`
+### Using the `MetaTag` facade in controllers: `app/Http/Controllers/ArticleController.php`
 
 ```php
 <?php 
@@ -89,7 +97,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $articles = \App\Model\Article::paginate();
+        $articles = \App\Models\Article::paginate();
         
         MetaTag::setTags([
             'title' => 'Article index page',
@@ -102,7 +110,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
     	// create entity
-        $article = \App\Model\Article::create($request->only([
+        $article = \App\Models\Article::create($request->only([
             //.. article data
         ]));
 
@@ -125,12 +133,12 @@ class ArticleController extends Controller
 				'h1' => $article->title,   
 			]);
         
-        return view('stow', compact('article'));
+        return view('show', compact('article'));
     }
 
     public function search(Request $request)
     {
-        $articles = \App\Model\Article::bySearch($request->q)
+        $articles = \App\Models\Article::bySearch($request->q)
             ->paginate();
         
         // Set tags for showing
@@ -148,14 +156,14 @@ class ArticleController extends Controller
 }
 ```
 
-For the package to work correctly, you must save to the database, in the `path` field, only the url-path itself, without a domain and trim slash'es (`/`)
+For the package to work correctly, store only the URL path in the `path` field (without domain), with slashes trimmed (`/`).
 
 Example:
 - `https://site.com/some/pages/?page=23` => `some/pages`
 - `https://site.com/some/pages` => `/`
 
 
-### Usage facade `MetaTag` in blade templates: `resources/views/layouts/app.blade.php`
+### Using the `MetaTag` facade in Blade templates: `resources/views/layouts/app.blade.php`
 
 Simple and efficient:
 
@@ -251,4 +259,4 @@ Similarly:
 
 ## Links
 
-* [Use perfect package for url-aliases](https://github.com/fomvasss/laravel-url-aliases)
+* [Use this package for URL aliases](https://github.com/fomvasss/laravel-url-aliases)

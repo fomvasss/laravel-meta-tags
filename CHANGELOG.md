@@ -1,5 +1,11 @@
 # Changelog Laravel Meta Tags
 
+## 3.6.0 - 2026-05-02
+
+- Added compatibility with Laravel 10, 11, 12, 13 (range: 5.8-13).
+- Improved migration stub compatibility for Laravel 5.8+ (`bigIncrements('id')`).
+- Replaced Blade `Str` alias usage with FQCN for more stable cross-version behavior.
+
 ## 2.0.0 - 2019-02-11
 
 - Added fields `seo_text`, `timestamps`

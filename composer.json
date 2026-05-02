@@ -11,11 +11,21 @@
         }
     ],
     "license": "MIT",
+    "funding": [
+        {
+            "type": "custom",
+            "url": "https://send.monobank.ua/jar/5xsqtHvVrY"
+        },
+        {
+            "type": "ko_fi",
+            "url": "https://ko-fi.com/fomvasss"
+        }
+    ],
     "require": {
         "php" : ">=7.0.0",
-        "illuminate/support": "^5.8|^6.0|^7.0|^8.0|^9.0",
-        "illuminate/database": "^5.8|^6.0|^7.0|^8.0|^9.0",
-        "illuminate/view": "^5.8|^6.0|^7.0|^8.0|^9.0"
+        "illuminate/support": ">=5.8 <14.0",
+        "illuminate/database": ">=5.8 <14.0",
+        "illuminate/view": ">=5.8 <14.0"
     },
     "autoload": {
         "psr-4": {

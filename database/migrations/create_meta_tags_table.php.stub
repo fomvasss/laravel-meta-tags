@@ -14,13 +14,13 @@ class CreateMetaTagsTable extends Migration
     public function up()
     {
         Schema::create('meta_tags', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
 
             // url path - without domain
             $table->string('path')->nullable();
 
             // metatagable: node, term,...
-            $table->integer('model_id')->nullable();
+            $table->unsignedBigInteger('model_id')->nullable();
             $table->string('model_type')->nullable();
 
             // Meta-tags
