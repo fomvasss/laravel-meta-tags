@@ -20,7 +20,7 @@ class MetaTag extends Model
      * @param string|null $type
      * @return mixed
      */
-    public function scopeByType($query, string $type = null)
+    public function scopeByType($query, ?string $type = null)
     {
         return $query->where('model_type', config("meta-tags.types.$type.model"));
     }

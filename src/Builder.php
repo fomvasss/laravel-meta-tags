@@ -99,7 +99,7 @@ class Builder
      * @param string $path
      * @return $this
      */
-    public function setPath(string $path = null)
+    public function setPath(?string $path = null)
     {
         $this->pathModel = null;
 
